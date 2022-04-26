@@ -7,7 +7,6 @@ const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const res = require('express/lib/response');
 
-
 //midleware
 app.use(cors());
 app.use(express.json());
@@ -28,7 +27,6 @@ function verifyJWT(req, res, next) {
     })
     // console.log('inside verifyJWT', authHeader);
 }
-
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.etjy5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 // const uri = "mongodb+srv://dbuser1:<password>@cluster0.etjy5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -72,7 +70,8 @@ async function run() {
             res.send(result);
         });
 
-        //delete
+        //Delete
+
         app.delete('/service/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
@@ -80,7 +79,7 @@ async function run() {
             res.send(result);
         });
 
-        //order collection api
+        //Order Collection API
 
         app.get('/order', verifyJWT, async (req, res) => {
             const decodedEmail = req.decoded.email;
@@ -94,7 +93,7 @@ async function run() {
             else {
                 res.status(403).send({ message: 'Forbidden Access' })
             }
-        })
+        });
 
         app.post('/order', async (req, res) => {
             const order = req.body;
