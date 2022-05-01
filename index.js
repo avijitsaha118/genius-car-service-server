@@ -7,7 +7,6 @@ const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const res = require('express/lib/response');
 
-
 //midleware
 app.use(cors());
 app.use(express.json());
@@ -44,7 +43,7 @@ async function run() {
         app.post('/login', async (req, res) => {
             const user = req.body;
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: '1d'
+                expiresIn: '10d'
             });
             res.send({ accessToken });
         })
@@ -72,7 +71,8 @@ async function run() {
             res.send(result);
         });
 
-        //delete
+        //Delete
+
         app.delete('/service/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
